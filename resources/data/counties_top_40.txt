@@ -1,0 +1,40 @@
+Los Angeles
+Cook
+Harris
+Maricopa
+San Diego
+Orange
+Miami-Dade
+Dallas
+Kings
+Riverside
+Queens
+King
+Clark
+San Bernardino
+Tarrant
+Bexar
+Broward
+Santa Clara
+Wayne
+Alameda
+New York
+Middlesex
+Philadelphia
+Sacramento
+Palm Beach
+Suffolk
+Hillsborough
+Bronx
+Nassau
+Orange(2)
+Franklin
+Hennepin
+Oakland
+Travis
+Cuyahoga
+Allegheny
+Salt Lake
+Fairfax
+Contra Costa
+Mecklenburg
