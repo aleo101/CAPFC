@@ -57,16 +57,23 @@ def line_sep():
             
            """)
     
-    
+def cases_edge_weight(G):
+    G2 = copy.deepcopy(G)
+    for node1 in G2.nodes():
+        for node2 in G2.nodes():
+            if G2.has_edge(node1, node2) == True:
+                G2[node1][node2]['weight'] = 10
+    return G2
 # G = cities_graph()
 # filehandler = open('graph_pi_shortest_5_23_20.obj', 'wb')
 # pickle.dump(G, filehandler)
 
 filehandler = open('graph_pi_shortest_5_23_20.obj', 'rb')
 G = pickle.load(filehandler)
+G2 = deepcopy(G) # equal to cases_edge_weight(G) when cases data is finished. 
 print("digraph has %d nodes with %d edges"
          % (nx.number_of_nodes(G), nx.number_of_edges(G)))
-
+         
 nx.draw_networkx(G)
 print("number of nodes: " + str(G.number_of_nodes()))
 print("number of edges : " + str(G.number_of_edges()))
@@ -90,3 +97,5 @@ while True:
             
     print("The distance between " +city_check1+ " and " + city_check2 + " is " + str( G.get_edge_data(city_check1, city_check2, default=0)))
     print("(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)))
+    print("--G2--The distance between " +city_check1+ " and " + city_check2 + " is " + str( G2.get_edge_data(city_check1, city_check2, default=0)))
+    print("--G2--(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G2, city_check1, city_check2)))
