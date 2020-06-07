@@ -17,13 +17,13 @@ def distance(source, dest):
     return (my_dist) 
 
 def cities_graph():
-    file = open(r'..\resources\data\top_100_cities_cali.txt')
+    file = open(r'..\resources\data\counties_top_40.txt')
     G = nx.Graph()
     cities = []
     
     for line in file.readlines():
-        if not "CA" in line:     #add CA to all lines to improve gmaps accuracy
-            line = line.strip() + ", CA"
+        if not "," in line:     #add County to all lines to improve gmaps accuracy
+            line = line.strip() + " County"
         numfind = re.compile("^\d+")
         city = line.strip()
         cities.append(city)
@@ -35,13 +35,13 @@ def cities_graph():
         for i in range(len(dist["rows"][0]["elements"])):   #for each destination.
             single_distance = int(dist["rows"][0]["elements"][i]["distance"]["value"] * 0.000621371192) #distance between node and a single iteration i. 
             if(single_distance !=0):
-                print("distance between {node} and {node2} is : {dist}".format(node = node, node2=  dist['destination_addresses'][i].split(',')[0] + ", CA", dist = single_distance))
-                # <dist['destination_addresses'][i].split(',', 2)[:2]> returns a couple ['City", 'ST'] below line uses .join to make it a string 'City, St'.
-                G.add_edge(node, ",".join(dist['destination_addresses'][i].split(',', 2)[:2]), weight=single_distance) #add edge between node and "node i" ignoring name after CA.  
+                # print("distance between {node} and {node2} is : {dist}".format(node = node, node2=  dist['destination_addresses'][i].split(',')[0] + ", CA", dist = single_distance))
+                G.add_edge(node, dist['destination_addresses'][i], weight=single_distance)
         G3.remove_node(node) #remove node whos edges have been calculated from list of nodes.
     A = copy.deepcopy(G)
     edgelist = A.edges(data='weight')
     num_of_removed_paths = 0
+    print("number of edges before optimization: " + str(G.number_of_edges))
     for x in edgelist: #parse through all edges in the graph
         if x[2] > nx.dijkstra_path_length(A, x[0], x[1]): #if the edge is longer than shortest path...
             #print("{} and {}".format(x[0], x[1]))
@@ -65,13 +65,13 @@ def cases_edge_weight(G):
             if G2.has_edge(node1, node2) == True:
                 G2[node1][node2]['weight'] = 10
     return G2
-# G = cities_graph()
-# filehandler = open('graph_pi_shortest_5_26_20.obj', 'wb')
-# pickle.dump(G, filehandler)
+G = cities_graph()
+filehandler = open('graph_pi_shortest_5_23_20.obj', 'wb')
+pickle.dump(G, filehandler)
 
-filehandler = open('graph_pi_shortest_5_26_20.obj', 'rb')
-G = pickle.load(filehandler)
-#G2 = copy.deepcopy(G) # equal to cases_edge_weight(G) when cases data is finished. 
+# filehandler = open('graph_pi_shortest_5_23_20.obj', 'rb')
+# G = pickle.load(filehandler)
+G2 = copy.deepcopy(G) # equal to cases_edge_weight(G) when cases data is finished. 
 print("digraph has %d nodes with %d edges"
          % (nx.number_of_nodes(G), nx.number_of_edges(G)))
          
@@ -96,9 +96,9 @@ while True:
         else:
             break 
             
-    print("The direct distance between " +city_check1+ " and " + city_check2 + " is " + str( G.get_edge_data(city_check1, city_check2, default=0)))
+    print("The distance between " +city_check1+ " and " + city_check2 + " is " + str( G.get_edge_data(city_check1, city_check2, default=0)))
     print("(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)))
     print("--->The path: " + str(nx.dijkstra_path(G, city_check1, city_check2)))
-    # print("--G2--The distance between " +city_check1+ " and " + city_check2 + " is " + str( G2.get_edge_data(city_check1, city_check2, default=0)))
-    # print("--G2--(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G2, city_check1, city_check2)))
+    print("--G2--The distance between " +city_check1+ " and " + city_check2 + " is " + str( G2.get_edge_data(city_check1, city_check2, default=0)))
+    print("--G2--(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G2, city_check1, city_check2)))
     

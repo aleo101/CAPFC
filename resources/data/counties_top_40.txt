@@ -3,15 +3,15 @@ Cook
 Harris
 Maricopa
 San Diego
-Orange
-Miami-Dade
+Orange County, California
+Miami, Florida
 Dallas
 Kings
 Riverside
 Queens
 King
 Clark
-San Bernardino
+San Bernardino, CA
 Tarrant
 Bexar
 Broward
@@ -19,7 +19,7 @@ Santa Clara
 Wayne
 Alameda
 New York
-Middlesex
+Middlesex County, MA
 Philadelphia
 Sacramento
 Palm Beach
@@ -27,7 +27,7 @@ Suffolk
 Hillsborough
 Bronx
 Nassau
-Orange(2)
+Orange County, Florida
 Franklin
 Hennepin
 Oakland
