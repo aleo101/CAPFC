@@ -1,7 +1,7 @@
 import googlemaps 
   
 # Requires API key 
-gmaps = googlemaps.Client(key = 'API_STRING') 
+gmaps = googlemaps.Client(key = 'API_KEY') 
   
 # Requires cities name 
 my_dist = gmaps.distance_matrix('Los Angeles', 'Cook County', units = "imperial")

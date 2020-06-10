@@ -10,7 +10,7 @@ import csv
 
 def distance(source, dest):
     #Requires API key 
-    gmaps = googlemaps.Client(key = 'API_STRING') 
+    gmaps = googlemaps.Client(key = 'API_KEY') 
   
     #Requires destination and source names 
     my_dist = gmaps.distance_matrix(source, dest, units="imperial")
