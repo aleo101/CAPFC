@@ -1,0 +1,253 @@
+distance between Alameda and Contra Costa is : 36
+distance between Alameda and Fresno is : 175
+distance between Alameda and Kern is : 286
+distance between Alameda and Los Angeles is : 371
+distance between Alameda and Monterey is : 111
+distance between Alameda and Orange is : 1841
+distance between Alameda and Placer is : 144
+distance between Alameda and Riverside is : 423
+distance between Alameda and Sacramento is : 84
+distance between Alameda and San Bernardino is : 424
+distance between Alameda and San Diego is : 491
+distance between Alameda and San Francisco is : 14
+distance between Alameda and San Joaquin is : 75
+distance between Alameda and San Mateo is : 31
+distance between Alameda and Santa Barbara is : 318
+distance between Alameda and Santa Clara is : 43
+distance between Alameda and Shasta is : 219
+distance between Alameda and Solano is : 55
+distance between Alameda and Sonoma is : 50
+distance between Alameda and Stanislaus is : 86
+distance between Alameda and Tulare is : 219
+distance between Alameda and Ventura is : 345
+distance between Contra Costa and Fresno is : 158
+distance between Contra Costa and Kern is : 273
+distance between Contra Costa and Los Angeles is : 358
+distance between Contra Costa and Monterey is : 121
+distance between Contra Costa and Orange is : 1828
+distance between Contra Costa and Placer is : 145
+distance between Contra Costa and Riverside is : 410
+distance between Contra Costa and Sacramento is : 85
+distance between Contra Costa and San Bernardino is : 411
+distance between Contra Costa and San Diego is : 478
+distance between Contra Costa and San Francisco is : 43
+distance between Contra Costa and San Joaquin is : 52
+distance between Contra Costa and San Mateo is : 58
+distance between Contra Costa and Santa Barbara is : 328
+distance between Contra Costa and Santa Clara is : 54
+distance between Contra Costa and Shasta is : 220
+distance between Contra Costa and Solano is : 59
+distance between Contra Costa and Sonoma is : 60
+distance between Contra Costa and Stanislaus is : 73
+distance between Contra Costa and Tulare is : 202
+distance between Contra Costa and Ventura is : 366
+distance between Fresno and Kern is : 123
+distance between Fresno and Los Angeles is : 219
+distance between Fresno and Monterey is : 152
+distance between Fresno and Orange is : 1677
+distance between Fresno and Placer is : 228
+distance between Fresno and Riverside is : 270
+distance between Fresno and Sacramento is : 169
+distance between Fresno and San Bernardino is : 271
+distance between Fresno and San Diego is : 339
+distance between Fresno and San Francisco is : 186
+distance between Fresno and San Joaquin is : 118
+distance between Fresno and San Mateo is : 182
+distance between Fresno and Santa Barbara is : 231
+distance between Fresno and Santa Clara is : 154
+distance between Fresno and Shasta is : 336
+distance between Fresno and Solano is : 176
+distance between Fresno and Sonoma is : 214
+distance between Fresno and Stanislaus is : 89
+distance between Fresno and Tulare is : 46
+distance between Fresno and Ventura is : 227
+distance between Kern and Los Angeles is : 131
+distance between Kern and Monterey is : 233
+distance between Kern and Orange is : 1572
+distance between Kern and Placer is : 349
+distance between Kern and Riverside is : 183
+distance between Kern and Sacramento is : 290
+distance between Kern and San Bernardino is : 167
+distance between Kern and San Diego is : 251
+distance between Kern and San Francisco is : 296
+distance between Kern and San Joaquin is : 239
+distance between Kern and San Mateo is : 283
+distance between Kern and Santa Barbara is : 166
+distance between Kern and Santa Clara is : 259
+distance between Kern and Shasta is : 457
+distance between Kern and Solano is : 298
+distance between Kern and Sonoma is : 324
+distance between Kern and Stanislaus is : 210
+distance between Kern and Tulare is : 77
+distance between Kern and Ventura is : 139
+distance between Los Angeles and Monterey is : 318
+distance between Los Angeles and Orange is : 1551
+distance between Los Angeles and Placer is : 445
+distance between Los Angeles and Riverside is : 53
+distance between Los Angeles and Sacramento is : 384
+distance between Los Angeles and San Bernardino is : 59
+distance between Los Angeles and San Diego is : 120
+distance between Los Angeles and San Francisco is : 381
+distance between Los Angeles and San Joaquin is : 335
+distance between Los Angeles and San Mateo is : 368
+distance between Los Angeles and Santa Barbara is : 95
+distance between Los Angeles and Santa Clara is : 345
+distance between Los Angeles and Shasta is : 550
+distance between Los Angeles and Solano is : 387
+distance between Los Angeles and Sonoma is : 409
+distance between Los Angeles and Stanislaus is : 304
+distance between Los Angeles and Tulare is : 173
+distance between Los Angeles and Ventura is : 68
+distance between Monterey and Orange is : 1788
+distance between Monterey and Placer is : 247
+distance between Monterey and Riverside is : 370
+distance between Monterey and Sacramento is : 186
+distance between Monterey and San Bernardino is : 371
+distance between Monterey and San Diego is : 438
+distance between Monterey and San Francisco is : 119
+distance between Monterey and San Joaquin is : 145
+distance between Monterey and San Mateo is : 101
+distance between Monterey and Santa Barbara is : 235
+distance between Monterey and Santa Clara is : 77
+distance between Monterey and Shasta is : 321
+distance between Monterey and Solano is : 157
+distance between Monterey and Sonoma is : 161
+distance between Monterey and Stanislaus is : 114
+distance between Monterey and Tulare is : 197
+distance between Monterey and Ventura is : 262
+distance between Orange and Placer is : 1781
+distance between Orange and Riverside is : 1518
+distance between Orange and Sacramento is : 1808
+distance between Orange and San Bernardino is : 1508
+distance between Orange and San Diego is : 1538
+distance between Orange and San Francisco is : 1851
+distance between Orange and San Joaquin is : 1794
+distance between Orange and San Mateo is : 1838
+distance between Orange and Santa Barbara is : 1641
+distance between Orange and Santa Clara is : 1814
+distance between Orange and Shasta is : 1877
+distance between Orange and Solano is : 1842
+distance between Orange and Sonoma is : 1875
+distance between Orange and Stanislaus is : 1765
+distance between Orange and Tulare is : 1632
+distance between Orange and Ventura is : 1614
+distance between Placer and Riverside is : 497
+distance between Placer and Sacramento is : 61
+distance between Placer and San Bernardino is : 498
+distance between Placer and San Diego is : 565
+distance between Placer and San Francisco is : 148
+distance between Placer and San Joaquin is : 112
+distance between Placer and San Mateo is : 165
+distance between Placer and Santa Barbara is : 453
+distance between Placer and Santa Clara is : 179
+distance between Placer and Shasta is : 191
+distance between Placer and Solano is : 95
+distance between Placer and Sonoma is : 128
+distance between Placer and Stanislaus is : 142
+distance between Placer and Tulare is : 272
+distance between Placer and Ventura is : 453
+distance between Riverside and Sacramento is : 435
+distance between Riverside and San Bernardino is : 11
+distance between Riverside and San Diego is : 98
+distance between Riverside and San Francisco is : 433
+distance between Riverside and San Joaquin is : 386
+distance between Riverside and San Mateo is : 420
+distance between Riverside and Santa Barbara is : 148
+distance between Riverside and Santa Clara is : 396
+distance between Riverside and Shasta is : 601
+distance between Riverside and Solano is : 439
+distance between Riverside and Sonoma is : 461
+distance between Riverside and Stanislaus is : 356
+distance between Riverside and Tulare is : 225
+distance between Riverside and Ventura is : 121
+distance between Sacramento and San Bernardino is : 437
+distance between Sacramento and San Diego is : 504
+distance between Sacramento and San Francisco is : 87
+distance between Sacramento and San Joaquin is : 53
+distance between Sacramento and San Mateo is : 104
+distance between Sacramento and Santa Barbara is : 387
+distance between Sacramento and Santa Clara is : 118
+distance between Sacramento and Shasta is : 167
+distance between Sacramento and Solano is : 34
+distance between Sacramento and Sonoma is : 68
+distance between Sacramento and Stanislaus is : 84
+distance between Sacramento and Tulare is : 213
+distance between Sacramento and Ventura is : 392
+distance between San Bernardino and San Diego is : 107
+distance between San Bernardino and San Francisco is : 434
+distance between San Bernardino and San Joaquin is : 387
+distance between San Bernardino and San Mateo is : 421
+distance between San Bernardino and Santa Barbara is : 149
+distance between San Bernardino and Santa Clara is : 397
+distance between San Bernardino and Shasta is : 603
+distance between San Bernardino and Solano is : 440
+distance between San Bernardino and Sonoma is : 462
+distance between San Bernardino and Stanislaus is : 357
+distance between San Bernardino and Tulare is : 226
+distance between San Bernardino and Ventura is : 122
+distance between San Diego and San Francisco is : 501
+distance between San Diego and San Joaquin is : 455
+distance between San Diego and San Mateo is : 488
+distance between San Diego and Santa Barbara is : 214
+distance between San Diego and Santa Clara is : 464
+distance between San Diego and Shasta is : 670
+distance between San Diego and Solano is : 507
+distance between San Diego and Sonoma is : 529
+distance between San Diego and Stanislaus is : 424
+distance between San Diego and Tulare is : 293
+distance between San Diego and Ventura is : 187
+distance between San Francisco and San Joaquin is : 86
+distance between San Francisco and San Mateo is : 19
+distance between San Francisco and Santa Barbara is : 325
+distance between San Francisco and Santa Clara is : 44
+distance between San Francisco and Shasta is : 222
+distance between San Francisco and Solano is : 58
+distance between San Francisco and Sonoma is : 44
+distance between San Francisco and Stanislaus is : 96
+distance between San Francisco and Tulare is : 230
+distance between San Francisco and Ventura is : 352
+distance between San Joaquin and San Mateo is : 82
+distance between San Joaquin and Santa Barbara is : 343
+distance between San Joaquin and Santa Clara is : 77
+distance between San Joaquin and Shasta is : 221
+distance between San Joaquin and Solano is : 61
+distance between San Joaquin and Sonoma is : 88
+distance between San Joaquin and Stanislaus is : 32
+distance between San Joaquin and Tulare is : 162
+distance between San Joaquin and Ventura is : 343
+distance between San Mateo and Santa Barbara is : 307
+distance between San Mateo and Santa Clara is : 27
+distance between San Mateo and Shasta is : 240
+distance between San Mateo and Solano is : 75
+distance between San Mateo and Sonoma is : 71
+distance between San Mateo and Stanislaus is : 93
+distance between San Mateo and Tulare is : 226
+distance between San Mateo and Ventura is : 334
+distance between Santa Barbara and Santa Clara is : 284
+distance between Santa Barbara and Shasta is : 529
+distance between Santa Barbara and Solano is : 364
+distance between Santa Barbara and Sonoma is : 368
+distance between Santa Barbara and Stanislaus is : 304
+distance between Santa Barbara and Tulare is : 208
+distance between Santa Barbara and Ventura is : 27
+distance between Santa Clara and Shasta is : 254
+distance between Santa Clara and Solano is : 89
+distance between Santa Clara and Sonoma is : 90
+distance between Santa Clara and Stanislaus is : 88
+distance between Santa Clara and Tulare is : 199
+distance between Santa Clara and Ventura is : 311
+distance between Shasta and Solano is : 172
+distance between Shasta and Sonoma is : 202
+distance between Shasta and Stanislaus is : 251
+distance between Shasta and Tulare is : 380
+distance between Shasta and Ventura is : 558
+distance between Solano and Sonoma is : 39
+distance between Solano and Stanislaus is : 91
+distance between Solano and Tulare is : 220
+distance between Solano and Ventura is : 391
+distance between Sonoma and Stanislaus is : 124
+distance between Sonoma and Tulare is : 257
+distance between Sonoma and Ventura is : 394
+distance between Stanislaus and Tulare is : 133
+distance between Stanislaus and Ventura is : 312
+distance between Tulare and Ventura is : 181

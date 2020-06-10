@@ -6,6 +6,8 @@ import networkx as nx
 import googlemaps
 import pickle
 import time
+import csv
+
 def distance(source, dest):
     #Requires API key 
     gmaps = googlemaps.Client(key = 'API_STRING') 
@@ -17,40 +19,43 @@ def distance(source, dest):
     return (my_dist) 
 
 def cities_graph():
-    file = open(r'..\resources\data\top_100_cities_cali.txt')
+    #file = open(r'..\resources\data\top_100_cities_cali.txt')
     G = nx.Graph()
     cities = []
-    
-    for line in file.readlines():
-        if not "CA" in line:     #add CA to all lines to improve gmaps accuracy
-            line = line.strip() + ", CA"
-        numfind = re.compile("^\d+")
-        city = line.strip()
-        cities.append(city)
-        G.add_node(city)
+    with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
+        linereader = csv.reader(csvfile, delimiter=',')
+        for row in linereader:
+            if row[0].startswith("#"):
+                continue 
+            line = row[1].strip() #County name (ex: "Sonoma")
+            #2 commente lines below are currently unused but may be useful in the future.
+            #county = line.strip()
+            #counties.append(county)
+            G.add_node(line)
     G2 = copy.deepcopy(G)
     G3 = copy.deepcopy(G)
     for node in G2.nodes():
-        dist = distance(node, list(G3.nodes()))  # distance converted to miles
+        dist = distance(node, list(G3.nodes()))  # distance between a single node and all others.
         for i in range(len(dist["rows"][0]["elements"])):   #for each destination.
+            G3list = list(G3.nodes())  #same destination above but with correct nodal names.
             single_distance = int(dist["rows"][0]["elements"][i]["distance"]["value"] * 0.000621371192) #distance between node and a single iteration i. 
             if(single_distance !=0):
-                print("distance between {node} and {node2} is : {dist}".format(node = node, node2=  dist['destination_addresses'][i].split(',')[0] + ", CA", dist = single_distance))
+                print("distance between {node} and {node2} is : {dist}".format(node = node, node2=  G3list[i], dist = single_distance))
+                #commented line below is no longer used.
                 # <dist['destination_addresses'][i].split(',', 2)[:2]> returns a couple ['City", 'ST'] below line uses .join to make it a string 'City, St'.
-                G.add_edge(node, ",".join(dist['destination_addresses'][i].split(',', 2)[:2]), weight=single_distance) #add edge between node and "node i" ignoring name after CA.  
+                G.add_edge(node, G3list[i], weight=single_distance) #add edge between node and "node at index i" with weight as direct driving distance between.  
         G3.remove_node(node) #remove node whos edges have been calculated from list of nodes.
-    A = copy.deepcopy(G)
-    edgelist = A.edges(data='weight')
+    G_with_edges = copy.deepcopy(G)
+    edgelist = G_with_edges.edges(data='weight')
     num_of_removed_paths = 0
     for x in edgelist: #parse through all edges in the graph
-        if x[2] > nx.dijkstra_path_length(A, x[0], x[1]): #if the edge is longer than shortest path...
+        if x[2] > nx.dijkstra_path_length(G_with_edges, x[0], x[1]): #if the edge is longer than shortest path...
             #print("{} and {}".format(x[0], x[1]))
             G.remove_edge(x[0], x[1])  #...remove the edge 
             #print("removing path between" + str(x[0]) + "and" + str(x[1]))
             num_of_removed_paths += 1
     line_sep()
     print("The number of removed inefficient edges is : {}".format(num_of_removed_paths))
-    file.close()
     return G
 def line_sep():
     print("""
@@ -65,12 +70,13 @@ def cases_edge_weight(G):
             if G2.has_edge(node1, node2) == True:
                 G2[node1][node2]['weight'] = 10
     return G2
-# G = cities_graph()
-# filehandler = open('graph_pi_shortest_5_26_20.obj', 'wb')
-# pickle.dump(G, filehandler)
+G = cities_graph()
+filehandler = open('counties_ca.obj', 'wb')
+pickle.dump(G, filehandler)
 
-filehandler = open('graph_pi_shortest_5_26_20.obj', 'rb')
-G = pickle.load(filehandler)
+# filehandler = open('counties_ca.obj', 'rb')
+# G = pickle.load(filehandler)
+filehandler.close()
 #G2 = copy.deepcopy(G) # equal to cases_edge_weight(G) when cases data is finished. 
 print("digraph has %d nodes with %d edges"
          % (nx.number_of_nodes(G), nx.number_of_edges(G)))
@@ -89,6 +95,9 @@ while True:
         if G.has_node(city_check1) == False:
             print("Node, " + city_check1 + " doesn't exist. Try again")
             continue
+        else:
+            break
+    while True:
         city_check2 = input("Enter Second City: ")
         if G.has_node(city_check2) == False:
             print("Node, " + city_check2 + " doesn't exist. Try again")
@@ -97,8 +106,8 @@ while True:
             break 
             
     print("The direct distance between " +city_check1+ " and " + city_check2 + " is " + str( G.get_edge_data(city_check1, city_check2, default=0)))
-    print("(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)))
+    print("(Dij) The path distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)))
     print("--->The path: " + str(nx.dijkstra_path(G, city_check1, city_check2)))
-    # print("--G2--The distance between " +city_check1+ " and " + city_check2 + " is " + str( G2.get_edge_data(city_check1, city_check2, default=0)))
-    # print("--G2--(Dij) The distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G2, city_check1, city_check2)))
+    line_sep()
+    #print("There are {} COVID-19 cases on this path".format(#call method that counts covid cases))
     

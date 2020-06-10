@@ -1,0 +1,24 @@
+Los Angeles,California
+San Diego,California
+Santa Clara,California
+San Francisco,California
+Fresno,California
+Sacramento,California
+Alameda,California
+Kern,California
+Orange,California
+Riverside,California
+San Joaquin,California
+San Bernardino,California
+Stanislaus,California
+Ventura,California
+Sonoma,California
+Monterey,California
+Placer,California
+Tulare,California
+Contra Costa,California
+Solano,California
+Santa Barbara,California
+San Mateo,California
+Butte,California
+Shasta,California
