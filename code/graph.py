@@ -43,12 +43,11 @@ def cities_graph():
                 # <dist['destination_addresses'][i].split(',', 2)[:2]> returns a couple ['City", 'ST'] below line uses .join to make it a string 'City, St'.
                 G.add_edge(node, G3list[i], weight=single_distance) #add edge between node and "node at index i" with weight as direct driving distance between.  
         G3.remove_node(node) #remove node whos edges have been calculated from list of nodes.
-    G_with_edges = copy.deepcopy(G)
+    G_with_edges = copy.deepcopy(G) # just use g2?
     edgelist = G_with_edges.edges(data='weight')
     num_of_removed_paths = 0
     for x in edgelist: #parse through all edges in the graph
         if x[2] > nx.dijkstra_path_length(G_with_edges, x[0], x[1]): #if the edge is longer than shortest path...
-            #print("{} and {}".format(x[0], x[1]))
             G.remove_edge(x[0], x[1])  #...remove the edge 
             #print("removing path between" + str(x[0]) + "and" + str(x[1]))
             num_of_removed_paths += 1
@@ -60,9 +59,10 @@ def remove_far_edges(G):
     G2 = copy.deepcopy(G) # equal to cases_edge_weight(G) when cases data is finished. 
     edgelist = G2.edges(data='weight')
     num_of_removed_paths = 0
-    for x in edgelist: #parse through all edges in the graph
-        if x[2] > 154:
-            for neighbor in G.neighbors(x[0]):
+    for x in edgelist: #iterate through all edges in the graph
+        if x[2] > 154: # If the edge is > 154 miles
+            #and there is a closer neighbor for both nodes
+            for neighbor in G.neighbors(x[0]):  
                 if G[x[0]][neighbor]['weight'] < G[x[0]][x[1]]['weight']:
                     for neighbor in G.neighbors(x[1]):
                         if G[x[1]][neighbor]['weight'] < G[x[0]][x[1]]['weight']:
@@ -71,6 +71,7 @@ def remove_far_edges(G):
                             num_of_removed_paths += 1
                             break 
                     break
+                
     print("Removed {} paths".format(num_of_removed_paths))    
     line_sep(1) 
     return G
@@ -85,27 +86,27 @@ def line_sep(number):
             """)
 #############################################################################################################
 # G = cities_graph()
-# filehandler = open('counties_ca_6_16.obj', 'wb')
+# filehandler = open('counties_ca_far_removed_6_16.obj', 'wb')
 # pickle.dump(G, filehandler)
 
-filehandler = open('counties_ca_6_16.obj', 'rb')
+filehandler = open('counties_ca_far_removed_6_16.obj', 'rb')
 G = pickle.load(filehandler)
-G= remove_far_edges(G)
+filehandler.close()
+#G= remove_far_edges(G)
 
-
-attrs = {'Alameda': {'attr1': 0}}
-with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
-    linereader = csv.reader(csvfile, delimiter=',')
-    row_num = 0
+# attrs = {'Alameda': {'attr1': 0}}
+# with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
+    # linereader = csv.reader(csvfile, delimiter=',')
+    # row_num = 0
     
-    for row in linereader:
-        if row[0].startswith("#"): #skip commented lines
-            continue 
-        case_number = int(row[4]) #index 4 is county case number
-        attrs[list(G.nodes)[row_num]] = {'attr1': case_number}
-        row_num = row_num + 1
-        #if row_num ==2 : break
-nx.set_node_attributes(G, attrs)
+    # for row in linereader:
+        # if row[0].startswith("#"): #skip commented lines
+            # continue 
+        # case_number = int(row[4]) #index 4 is county case number
+        # attrs[list(G.nodes)[row_num]] = {'attr1': case_number}
+        # row_num = row_num + 1
+# nx.set_node_attributes(G, attrs)
+
 line_sep(1)
 print("digraph has %d nodes with %d edges" % (nx.number_of_nodes(G), nx.number_of_edges(G)))
 print("number of nodes: " + str(G.number_of_nodes()))
@@ -116,9 +117,11 @@ for i in range(23):
     print(node_to_list, end = ": ")
     print(G.nodes[node_to_list]['attr1']) 
 #print("edges: {}",format(G.edges())) #very long edge list
-filehandler.close()
+# filehandler = open('counties_ca_far_removed_6_16.obj', 'wb')
+# pickle.dump(G, filehandler)
+# filehandler.close()
 nx.draw_networkx(G)
-plt.show()
+plt.show(block=False)
 line_sep(2)
 while True:
     while True:
@@ -144,15 +147,13 @@ while True:
         except ValueError:
             print("Error: Input must be a positive integer...")
             
-    print("Max Case allowed: {}".format(max_cases))  
-    line_sep(1)
-    print("(Dij) The path distance between " +city_check1+ " and " + city_check2 + " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)))
-    print("--->The path: " + str(nx.dijkstra_path(G, city_check1, city_check2)))
+    print("")  
     
     total_cases_on_path = 0
     for j in nx.dijkstra_path(G, city_check1, city_check2):
         total_cases_on_path = total_cases_on_path + G.nodes[j]['attr1']
-    print("total cases on this path: " + str(total_cases_on_path))
+    #print("total cases on this path: " + str(total_cases_on_path))
+    
     if total_cases_on_path > max_cases:
         for path in k_shortest_paths(G, city_check1, city_check2, 30):
             total_cases_on_path = 0
@@ -160,10 +161,19 @@ while True:
             for k in path:
                 total_cases_on_path = total_cases_on_path + G.nodes[k]['attr1']
             if total_cases_on_path < max_cases:
-                print(str(path) + '--> cases: ' + str(total_cases_on_path))
+                print("--->The path takes this route: " + str(path) 
+                print('-->Total cases: ' + str(total_cases_on_path))
+                length=0
+                for l in range(len(path)-1):
+                    length = length + G[path[l]][path[l+1]]['weight']
+                    #print(f"length between {path[l]} and {path[l+1]} = {G[path[l]][path[l+1]]['weight']}")
+                print("Total Distance: {}".format(length))
                 break
                 
     else: 
+        print("(Dij) The total distance between " +city_check1+ " and " + city_check2 + 
+            " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)) + ' miles.')
+        print("--->The path takes this route: " + str(nx.dijkstra_path(G, city_check1, city_check2)))
         print("The path has " + str(total_cases_on_path) + " which is under the max: " +
             str(max_cases))
     line_sep(2)    
