@@ -1,4 +1,3 @@
-import re
 import sys
 import copy 
 import matplotlib.pyplot as plt
@@ -8,6 +7,7 @@ import pickle
 import time
 import csv
 from itertools import islice
+#import re
 
 def distance(source, dest):
     #Requires API key 
@@ -19,7 +19,7 @@ def distance(source, dest):
     #returning result
     return (my_dist) 
 
-def cities_graph():
+def counties_graph():
     #file = open(r'..\resources\data\top_100_cities_cali.txt')
     G = nx.Graph()
     with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
@@ -76,8 +76,64 @@ def remove_far_edges(G):
     line_sep(1) 
     return G
     
-def k_shortest_paths(G, source, target, k, weight= 'weight'):
+def find_next_shortest_paths(G, source, target, k, weight= 'weight'):
     return list(islice(nx.shortest_simple_paths(G, source, target, weight=weight), k))
+    
+def find_shortest_path( max_cases, G, county_check1, county_check2):    
+    for path in find_next_shortest_paths(G, county_check1, county_check2, 30): #check the next k shortest paths 
+        total_cases_on_path = 0
+        #print("checking path: " + str(path))
+        for node in path:
+            total_cases_on_path = total_cases_on_path + G.nodes[node]['attr1']
+        if total_cases_on_path < max_cases:
+            # print("--->The path takes this route: " + str(path) 
+            # print('-->Total cases: ' + str(total_cases_on_path))
+            length=0
+            for l in range(len(path)-1):
+                length = length + G[path[l]][path[l+1]]['weight']
+            #print(f"length between {path[l]} and {path[l+1]} = {G[path[l]][path[l+1]]['weight']}")
+            #print("Total Distance: {}".format(length))
+            return path, length, total_cases_on_path 
+   
+    return [], 0, total_cases_on_path   
+    
+def total_cases(graph, county_check1, county_check2):      
+    total_cases_on_path = 0
+    for j in nx.dijkstra_path(G, county_check1, county_check2):
+        total_cases_on_path = total_cases_on_path + G.nodes[j]['attr1']
+    #print("total cases on this path: " + str(total_cases_on_path))
+    return total_cases_on_path   
+    
+def get_county_web_data(county):
+    county = county.strip()
+    switcher = {
+        'Alameda'         : "http://www.acphd.org/2019-ncov.aspx",
+        'Butte'           : "https://www.buttecounty.net/publichealth/Home/fbclid",
+        'Contra Costa'    : "https://www.contracosta.ca.gov/CivicAlerts.aspx?AID=2180",
+        'Fresno'          : "https://www.co.fresno.ca.us/departments/public-health/covid-19",
+        'Kern'            : "https://kernpublichealth.com/2019-novel-coronavirus/",
+        'Los Angeles'     : "http://publichealth.lacounty.gov/media/coronavirus/",
+        'Monterey'        : "https://www.co.monterey.ca.us/government/departments-a-h/administrative-office/office-of-emergency-services/response/covid-19",
+        'Orange'          : "https://occovid19.ochealthinfo.com/coronavirus-in-oc",
+        'Placer'          : "https://www.placer.ca.gov/6367/Novel-Coronavirus-COVID-19",
+        'Riverside'       : "https://www.rivcoph.org/coronavirus",
+        'Sacramento'      : "https://www.saccounty.net/COVID-19/Pages/default.aspx",
+        'San Bernardino'  : "https://sbcovid19.com/",
+        'San Diego'       : "https://www.sandiegocounty.gov/coronavirus.html",
+        'San Francisco'   : "https://sf.gov/topics/coronavirus-covid-19",
+        'San Joaquin'     : "http://www.sjcphs.org/coronavirus.aspx",
+        'San Mateo'       : "https://www.smchealth.org/coronavirus",
+        'Santa Barbara'   : "https://publichealthsbc.org/",
+        'Santa Clara'     : "https://www.sccgov.org/sites/covid19/Pages/dashboard.aspx",
+        'Shasta'          : "https://www.co.shasta.ca.us/covid-19/overview",
+        'Solano'          : "https://www.solanocounty.com/depts/ph/coronavirus.asp",
+        'Sonoma'          : "https://www.sonomacounty.com/coronavirus",
+        'Stanislaus'      : "http://schsa.org/publichealth/pages/corona-virus/",
+        'Tulare'          : "https://tchhsa.org/eng/index.cfm/public-health/covid-19-updates-novel-coronavirus/",
+        'Ventura'         : "https://www.vcemergency.com/"
+    }
+    return switcher.get(county, "https://www.google.com/intl/en_us/covid19/")
+
 
 def line_sep(number):
     for i in range(number):
@@ -85,57 +141,69 @@ def line_sep(number):
                 ********************************************************************
             """)
 #############################################################################################################
-# G = cities_graph()
+
+#save G as graph object 
+# G = counties_graph()
 # filehandler = open('counties_ca_far_removed_6_16.obj', 'wb')
 # pickle.dump(G, filehandler)
 
+#Load Graph object
 filehandler = open('counties_ca_far_removed_6_16.obj', 'rb')
 G = pickle.load(filehandler)
 filehandler.close()
-#G= remove_far_edges(G)
 
-# attrs = {'Alameda': {'attr1': 0}}
-# with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
-    # linereader = csv.reader(csvfile, delimiter=',')
-    # row_num = 0
+''' **This block of code removes far edges to make the graph better reflect a real world map**
+    **It also adds the case totals for each county as a nodal attribute**
+G= remove_far_edges(G)
+attrs = {'Alameda': {'attr1': 0}}
+with open(r'..\resources\data\populous-ca-counties-6-6-2020.csv', newline='') as csvfile:
+    linereader = csv.reader(csvfile, delimiter=',')
+    row_num = 0
     
-    # for row in linereader:
-        # if row[0].startswith("#"): #skip commented lines
-            # continue 
-        # case_number = int(row[4]) #index 4 is county case number
-        # attrs[list(G.nodes)[row_num]] = {'attr1': case_number}
-        # row_num = row_num + 1
-# nx.set_node_attributes(G, attrs)
+    for row in linereader:
+        if row[0].startswith("#"): #skip commented lines
+            continue 
+        case_number = int(row[4]) #index 4 is county case number
+        attrs[list(G.nodes)[row_num]] = {'attr1': case_number}
+        row_num = row_num + 1
+nx.set_node_attributes(G, attrs)
 
+filehandler = open('counties_ca_far_removed_6_16.obj', 'wb') #save graph obj in its final form.
+pickle.dump(G, filehandler)
+filehandler.close()
+'''
 line_sep(1)
 print("digraph has %d nodes with %d edges" % (nx.number_of_nodes(G), nx.number_of_edges(G)))
 print("number of nodes: " + str(G.number_of_nodes()))
 print("number of edges : " + str(G.number_of_edges()))
 line_sep(2)
+
+
+nx.draw_networkx(G)
+plt.show(block=False)
+
+
+
 for i in range(23):
     node_to_list = list(G.nodes)[i]
     print(node_to_list, end = ": ")
-    print(G.nodes[node_to_list]['attr1']) 
-#print("edges: {}",format(G.edges())) #very long edge list
-# filehandler = open('counties_ca_far_removed_6_16.obj', 'wb')
-# pickle.dump(G, filehandler)
-# filehandler.close()
-nx.draw_networkx(G)
-plt.show(block=False)
+    print(f"{G.nodes[node_to_list]['attr1']} cases") 
+#print("edges: {}".format(G.edges())) #very long edge list
 line_sep(2)
+
 while True:
-    while True:
-        city_check1 = input("Enter First County (case sensitive): ") + ', CA'
-        if G.has_node(city_check1) == False:
-            print("Node, " + city_check1 + " doesn't exist. Try again")
+    while True:                                                                             
+        county_check1 = input("Enter First County (case sensitive): ") + ', CA'
+        if G.has_node(county_check1) == False:
+            print("Node, " + county_check1 + " doesn't exist. Try again")
             line_sep(1)
             continue
         else:
             break
     while True:
-        city_check2 = input("Enter Second County (case sensitive): ") + ', CA'
-        if G.has_node(city_check2) == False:
-            print("Node, " + city_check2 + " doesn't exist. Try again")
+        county_check2 = input("Enter Second County (case sensitive): ") + ', CA'
+        if G.has_node(county_check2) == False:
+            print("Node, " + county_check2 + " doesn't exist. Try again")
             continue 
         else:
             break 
@@ -147,35 +215,25 @@ while True:
         except ValueError:
             print("Error: Input must be a positive integer...")
             
-    print("")  
+    print("") 
     
-    total_cases_on_path = 0
-    for j in nx.dijkstra_path(G, city_check1, city_check2):
-        total_cases_on_path = total_cases_on_path + G.nodes[j]['attr1']
-    #print("total cases on this path: " + str(total_cases_on_path))
-    
+    total_cases_on_path = total_cases(G, county_check1, county_check2)
     if total_cases_on_path > max_cases:
-        for path in k_shortest_paths(G, city_check1, city_check2, 30):
-            total_cases_on_path = 0
-            print("checking path: " + str(path))
-            for k in path:
-                total_cases_on_path = total_cases_on_path + G.nodes[k]['attr1']
-            if total_cases_on_path < max_cases:
-                print("--->The path takes this route: " + str(path) 
-                print('-->Total cases: ' + str(total_cases_on_path))
-                length=0
-                for l in range(len(path)-1):
-                    length = length + G[path[l]][path[l+1]]['weight']
-                    #print(f"length between {path[l]} and {path[l+1]} = {G[path[l]][path[l+1]]['weight']}")
-                print("Total Distance: {}".format(length))
-                break
-                
-    else: 
-        print("(Dij) The total distance between " +city_check1+ " and " + city_check2 + 
-            " is " + str( nx.dijkstra_path_length(G, city_check1, city_check2)) + ' miles.')
-        print("--->The path takes this route: " + str(nx.dijkstra_path(G, city_check1, city_check2)))
-        print("The path has " + str(total_cases_on_path) + " which is under the max: " +
-            str(max_cases))
-    line_sep(2)    
-
-    
+        k_short_path, length, total_cases_on_path = find_shortest_path( max_cases, G, county_check1, county_check2 ) 
+        if not k_short_path:
+            most_infectious_county = sorted(G.nodes().items(), key = lambda x: x[1]['attr1'], reverse=True)[0][0] #need to only use nodes on the path 
+            print(most_infectious_county)
+            print("Sorry, there are no paths which encounter less than the max set COVID-19 cases.")
+            
+        else:
+            print(f'--->The path takes this route: {k_short_path}.') 
+            print(f'--->Total cases: {total_cases_on_path}.')
+            print(f'--->Total path distance: {length} miles.')
+            print(get_county_web_data(county_check2))
+    else:       
+        print("--->The path takes this route: " + str(nx.dijkstra_path(G, county_check1, county_check2)))
+        print(f"(Dij)--->Total path distance: {nx.dijkstra_path_length(G, county_check1, county_check2)} miles.")
+        print(f"The path has {total_cases_on_path} cases which is under the maximum of {max_cases}.")
+        print(f"finding the website for {county_check2}")
+        print(get_county_web_data(county_check2.split(",")[0])) 
+    line_sep(2)     

@@ -1,0 +1,25 @@
+#date,county,state,fips,cases,deaths
+2020-06-17,Alameda,California,06001,4554,116
+#2020-06-17,Butte,California,06007,90,1
+2020-06-17,Contra Costa,California,06013,2071,50
+2020-06-17,Fresno,California,06019,2900,61
+2020-06-17,Kern,California,06029,3522,58
+2020-06-17,Los Angeles,California,06037,77189,2991
+2020-06-17,Monterey,California,06053,1075,12
+2020-06-17,Orange,California,06059,9197,243
+2020-06-17,Placer,California,06061,432,9
+2020-06-17,Riverside,California,06065,11951,399
+2020-06-17,Sacramento,California,06067,1891,67
+2020-06-17,San Bernardino,California,06071,8014,229
+2020-06-17,San Diego,California,06073,9917,327
+2020-06-17,San Francisco,California,06075,2985,47
+2020-06-17,San Joaquin,California,06077,1888,47
+2020-06-17,San Mateo,California,06081,2618,99
+2020-06-17,Santa Barbara,California,06083,2155,21
+2020-06-17,Santa Clara,California,06085,3288,153
+2020-06-17,Shasta,California,06089,58,4
+2020-06-17,Solano,California,06095,797,23
+2020-06-17,Sonoma,California,06097,803,4
+2020-06-17,Stanislaus,California,06099,1278,35
+2020-06-17,Tulare,California,06107,2881,106
+2020-06-17,Ventura,California,06111,1706,41
